@@ -1,16 +1,22 @@
 import { Server } from "socket.io";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const port = process.env.PORT || 4000;
+const frontendURL = process.env.FRONTEND_URL;
 
 const io = new Server({
   cors: {
-    origin: "http://localhost:5173",
+    origin: frontendURL,
   },
 });
 
 let onlineUser = [];
 
 const addUser = (userId, socketId) => {
-  const userExits = onlineUser.find((user) => user.userId === userId);
-  if (!userExits) {
+  const userExists = onlineUser.find((user) => user.userId === userId);
+  if (!userExists) {
     onlineUser.push({ userId, socketId });
   }
 };
@@ -42,6 +48,7 @@ io.on("connection", (socket) => {
   });
 });
 
-io.listen("4000");
+io.listen(port);
 
-console.log("Socket server is running on Port : 4000");
+console.log(`Socket server is running on Port: ${port}`);
+
