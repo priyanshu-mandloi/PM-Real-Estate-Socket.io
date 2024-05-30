@@ -8,7 +8,7 @@ const frontendURL = process.env.FRONTEND_URL;
 
 const io = new Server({
   cors: {
-    origin: frontendURL,
+    origin: true,
   },
 });
 
